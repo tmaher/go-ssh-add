@@ -28,7 +28,7 @@ func main() {
   var block_plaintext, _ = x509.DecryptPEMBlock(block, []byte(pw))
   var add_key agent.AddedKey
   add_key.PrivateKey, err = x509.ParsePKCS1PrivateKey(block_plaintext)
-  add_key.Comment = "this is a comment about butts and stuff"
+  add_key.Comment = key_path
   add_key.ConfirmBeforeUse = true
 
   unix_addr, err := net.ResolveUnixAddr("unix", os.Getenv("SSH_AUTH_SOCK"))
