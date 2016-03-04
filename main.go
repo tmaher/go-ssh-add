@@ -14,9 +14,7 @@ func main() {
       Name:     "list",
       Aliases:  []string{"l"},
       Usage:    "List loaded keys",
-      Action:   func(c *cli.Context) {
-        println("unimplemented: Listing keys")
-      },
+      Action:   sshAgentClient.CliList,
     },
     {
       Name:      "add",
@@ -26,18 +24,20 @@ func main() {
     },
     {
       Name:      "delete",
-      Aliases:    []string{"d"},
-      Usage:     "complete a task on the list",
-      Action: func(c *cli.Context) {
-        println("delete key: ", c.Args().First())
-      },
+      Aliases:   []string{"d"},
+      Usage:     "Delete specified key",
+      Action:    sshAgentClient.CliDelete,
+    },
+    {
+      Name:      "delete-all",
+      Usage:     "Delete *ALL* loaded keys from agent",
+      Action:    sshAgentClient.CliDeleteAll,
     },
     {
       Name:       "auto",
+      Aliases:    []string{"au"},
       Usage:      "auto-load all keys listed in keychain",
-      Action:     func(c *cli.Context) {
-        println("auto-load")
-      },
+      Action:     sshAgentClient.CliAuto,
     },
   }
 
