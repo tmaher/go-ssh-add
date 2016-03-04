@@ -34,10 +34,10 @@ func main() {
       Action:    sshAgentClient.CliDeleteAll,
     },
     {
-      Name:       "auto",
-      Aliases:    []string{"au"},
+      Name:       "add-all",
+      Aliases:    []string{"add-all"},
       Usage:      "auto-load all keys listed in keychain",
-      Action:     sshAgentClient.CliAuto,
+      Action:     sshAgentClient.CliAddAll,
     },
   }
 

@@ -3,7 +3,6 @@ package sshAgentClient
 import "os"
 import "net"
 import "fmt"
-import "errors"
 import "io/ioutil"
 import "encoding/base64"
 import "crypto/md5"
@@ -11,6 +10,7 @@ import "crypto/sha1"
 import "crypto/x509"
 import "encoding/pem"
 //import "golang.org/x/crypto/ssh"
+import "golang.org/x/crypto/ssh"
 import "golang.org/x/crypto/ssh/agent"
 import "github.com/keybase/go-keychain"
 import "github.com/codegangsta/cli"
@@ -24,7 +24,7 @@ func Abort(msg string){
 
 func AbortOnError(err error, msg string) {
   if err == nil { return }
-  Abort(msg + "\n" + err + "\n")
+  Abort(msg + "\n" + err.Error() + "\n")
 }
 
 func GetAgent() (agent.Agent) {
@@ -66,7 +66,7 @@ func Add(key_path string) int {
   return 0
 }
 
-func CliAuto(c *cli.Context){
+func CliAddAll(c *cli.Context){
   accts, err := keychain.GetGenericPasswordAccounts("SSH")
   AbortOnError(err, "Can't get list of keychain'd SSH keys")
   for _, key_file := range accts { Add(key_file) }
@@ -112,7 +112,7 @@ func DeleteAll() int {
     pubkey, err := ssh.ParsePublicKey(key.Blob)
     AbortOnError(err, "Can't paarse public key " + key.Comment + " for deletion")
     err = GetAgent().Remove(pubkey)
-    AbortOnError(err, "Can't reemove public key " + key_path)
+    AbortOnError(err, "Can't reemove public key " + key.Comment)
   }
   return 0
 }
