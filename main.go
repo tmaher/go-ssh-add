@@ -1,19 +1,8 @@
 package main
 
 import "os"
-import "net"
-import "fmt"
-import "io/ioutil"
-import "crypto/x509"
-import "encoding/pem"
-// import "golang.org/x/crypto/ssh"
-import "golang.org/x/crypto/ssh/agent"
-// import "github.com/lunixbochs/go-keychain"
-import "github.com/keybase/go-keychain"
 import "github.com/codegangsta/cli"
-
 import "github.com/tmaher/go-ssh-add/ssh-agent-client"
-
 
 func main() {
   app := cli.NewApp()
@@ -33,9 +22,7 @@ func main() {
       Name:      "add",
       Aliases:   []string{"a"},
       Usage:     "add a key",
-      Action: func(c *cli.Context) {
-        println("add key: ", c.Args().First())
-      },
+      Action:    sshAgentClient.CliAdd,
     },
     {
       Name:      "delete",
